@@ -1,17 +1,5 @@
-/**
- * A Javascript implementation of a Sudoku game, including a
- * backtracking algorithm solver. For example usage see the
- * attached index.html demo.
- *
- * @author Moriel Schottlender
- */
 var Sudoku = ( function ( $ ){
 	var _instance, _game,
-		/**
-		 * Default configuration options. These can be overriden
-		 * when loading a game instance.
-		 * @property {Object}
-		 */
 		defaultConfig = {
 			// If set to true, the game will validate the numbers
 			// as the player inserts them. If it is set to false,
@@ -101,15 +89,19 @@ var Sudoku = ( function ( $ ){
 				}
 
 				// Display elapsed time
+				var output_str = "";
 				if ( _game.config.show_solver_timer ) {
 					elapsed = endtime - starttime;
-					window.console.log( 'Solver elapsed time: ' + elapsed + 'ms' );
+					//window.console.log( 'Solver elapsed time: ' + elapsed + 'ms' );
+					output_str += '求解器经过时间: ' + elapsed + 'ms, ';
 				}
 				// Display number of reursions and backtracks
 				if ( _game.config.show_recursion_counter ) {
-					window.console.log( 'Solver recursions: ' + _game.recursionCounter );
-					window.console.log( 'Solver backtracks: ' + _game.backtrackCounter );
+					//window.console.log( 'Solver recursions: ' + _game.recursionCounter );
+					//window.console.log( 'Solver backtracks: ' + _game.backtrackCounter );
+					output_str += '求解递归' + _game.recursionCounter + '层, 求解回溯' + _game.backtrackCounter + '次.';
 				}
+				$( '#description').text( output_str );
 			}
 		};
 	}
@@ -262,9 +254,9 @@ var Sudoku = ( function ( $ ){
 		 * @returns {Boolean} Valid or invalid input
 		 */
 		validateNumber: function( num, rowID, colID, oldNum ) {
-			var isValid = true,
+			var isValid = true;
 				// Section
-				sectRow = Math.floor( rowID / 3 ),
+				sectRow = Math.floor( rowID / 3 );
 				sectCol = Math.floor( colID / 3 );
 
 			// This is given as the matrix component (old value in
@@ -293,26 +285,26 @@ var Sudoku = ( function ( $ ){
 			// Skip if empty value
 
 			if ( num !== '' ) {
-
-
 				// Validate value
-				if (
-					// Make sure value is numeric
-					$.isNumeric( num ) &&
-					// Make sure value is within range
-					Number( num ) > 0 &&
-					Number( num ) <= 9
-				) {
+				if ( $.isNumeric( num ) && // Make sure value is numeric
+					Number( num ) > 0 &&// Make sure value is within range
+					Number( num ) <= 9 )
+					{
 					// Check if it already exists in validation array
-					if (
-						$.inArray( num, this.validation.row[rowID] ) > -1 ||
+					if ( $.inArray( num, this.validation.row[rowID] ) > -1 ||
 						$.inArray( num, this.validation.col[colID] ) > -1 ||
-						$.inArray( num, this.validation.sect[sectRow][sectCol] ) > -1
-					) {
+						$.inArray( num, this.validation.sect[sectRow][sectCol] ) > -1 )
+					{
 						isValid = false;
-					} else {
+					}
+					else
+					{
 						isValid = true;
 					}
+				}
+				else
+				{
+					isValid = false;
 				}
 
 				// Insert new value into validation array even if it isn't

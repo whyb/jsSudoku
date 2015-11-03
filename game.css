@@ -52,3 +52,8 @@ button, h1 {
 .sudoku-section-one {
 	background: #ccc;
 }
+
+#description {
+    font-size: 20px;
+    text-align: center;
+}
